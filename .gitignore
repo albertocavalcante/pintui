@@ -1,0 +1,32 @@
+# Rust
+/rust/target/
+/rust/Cargo.lock
+
+# Go
+/go/bin/
+/go/*.exe
+
+# TypeScript/Node
+/typescript/node_modules/
+/typescript/dist/
+/typescript/*.tsbuildinfo
+/typescript/package-lock.json
+
+# Python
+/python/__pycache__/
+/python/*.pyc
+/python/*.egg-info/
+/python/dist/
+/python/build/
+/python/.venv/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db

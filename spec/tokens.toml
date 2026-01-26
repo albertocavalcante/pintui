@@ -1,0 +1,103 @@
+# Pintui Design Tokens
+# ====================
+# This is the source of truth for the pintui design system.
+# All language implementations should follow these specifications.
+
+[meta]
+name = "pintui"
+version = "0.1.0"
+description = "Paint your terminal beautifully"
+
+# =============================================================================
+# Colors
+# =============================================================================
+# Semantic color mappings. Implementations should use ANSI colors for
+# terminal compatibility, with hex values provided for documentation/previews.
+
+[colors]
+success = { ansi = "green", hex = "#22c55e", description = "Successful operations" }
+error = { ansi = "red", hex = "#ef4444", description = "Failed operations, errors" }
+warning = { ansi = "yellow", hex = "#eab308", description = "Warnings, caution" }
+info = { ansi = "blue", hex = "#3b82f6", description = "Informational messages" }
+accent = { ansi = "cyan", hex = "#06b6d4", description = "Headers, emphasis" }
+muted = { ansi = "bright_black", hex = "#6b7280", description = "Secondary, dimmed text" }
+
+# =============================================================================
+# Icons
+# =============================================================================
+# Unicode symbols for semantic indicators. These should be consistent across
+# all implementations to create a unified visual language.
+
+[icons]
+success = "✓"
+error = "✗"
+warning = "⚠"
+info = "ℹ"
+skipped = "○"
+pending = "◯"
+bullet = "•"
+arrow = "→"
+
+# =============================================================================
+# Spinner
+# =============================================================================
+# Animation frames and timing for indeterminate progress indicators.
+
+[spinner]
+frames = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"]
+interval_ms = 80
+
+# Alternative spinner styles (implementations may offer these as options)
+[spinner.alt.dots]
+frames = ["⣾", "⣽", "⣻", "⢿", "⡿", "⣟", "⣯", "⣷"]
+interval_ms = 80
+
+[spinner.alt.line]
+frames = ["-", "\\", "|", "/"]
+interval_ms = 100
+
+# =============================================================================
+# Progress Bar
+# =============================================================================
+# Characters and styling for determinate progress indicators.
+
+[progress_bar]
+filled = "━"
+current = "╸"
+empty = "─"
+width = 40
+template = "{prefix} {spinner} [{bar}] {pos}/{len} {msg}"
+
+# =============================================================================
+# Layout
+# =============================================================================
+# Spacing and structural constants.
+
+[layout]
+indent_size = 2           # Spaces per indent level
+divider_char = "─"        # Character for horizontal rules
+header_underline = true   # Whether headers have underlines
+
+# =============================================================================
+# Typography
+# =============================================================================
+# Text styling rules.
+
+[typography]
+header = { bold = true }
+section = { bold = true, color = "accent" }
+key = { color = "muted" }
+value = { }
+step_indicator = { bold = true, color = "info" }
+
+# =============================================================================
+# Message Formats
+# =============================================================================
+# Templates for semantic message types.
+
+[messages]
+info = { icon = "info", color = "info", template = "{icon} {message}" }
+success = { icon = "success", color = "success", template = "{icon} {message}" }
+warning = { icon = "warning", color = "warning", template = "{icon} {message}" }
+error = { icon = "error", color = "error", template = "{icon} {message}", stderr = true }
+dim = { color = "muted", template = "  {message}" }

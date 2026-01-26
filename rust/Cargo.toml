@@ -1,0 +1,26 @@
+[package]
+name = "pintui"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.85"
+description = "Paint your terminal beautifully — a TUI design system for Rust"
+license = "MIT"
+repository = "https://github.com/albertocavalcante/pintui"
+homepage = "https://github.com/albertocavalcante/pintui"
+documentation = "https://docs.rs/pintui"
+readme = "../README.md"
+keywords = ["tui", "terminal", "cli", "design-system", "colors"]
+categories = ["command-line-interface", "development-tools"]
+
+[dependencies]
+colored = "3"
+indicatif = "0.18"
+
+[dev-dependencies]
+# None yet
+
+[lints.rust]
+missing_docs = "warn"
+
+[lints.clippy]
+all = "warn"
