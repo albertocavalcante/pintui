@@ -1,173 +1,149 @@
+<div align="center">
+
 # pintui
 
-**Paint your terminal beautifully** — a cross-language TUI design system.
+**Paint your terminal beautifully**
 
-Like Tailwind for your terminal. Define once, use everywhere.
+A cross-language design system for terminal UIs.
 
-## The Problem
+[![CI](https://github.com/albertocavalcante/pintui/actions/workflows/ci.yml/badge.svg)](https://github.com/albertocavalcante/pintui/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-Every CLI tool you build has inconsistent styling:
-- Different colors for success/error
-- Different progress spinners
-- Different formatting conventions
+```
+✓ Connected to server                    ℹ Processing 42 files...
+✗ Authentication failed                  ⚠ Rate limit: 95%
 
-Your Rust CLI looks different from your Go CLI looks different from your Python script.
+⠋ Deploying to production...
 
-## The Solution
+Configuration
+─────────────
+  Environment: production
+  Region:      us-east-1
 
-Pintui is a **design system** for terminal UIs with implementations in multiple languages:
+[━━━━━━━━━━━━━━━━━━━━╸───────────────────] 50%
+```
 
-| Language | Package | Status |
-|----------|---------|--------|
-| Rust | `pintui` | 🚧 In Progress |
-| Go | `pintui-go` | 📋 Planned |
-| TypeScript | `@pintui/core` | 📋 Planned |
-| Python | `pintui` | 📋 Planned |
-| Kotlin | `io.pintui:pintui-kotlin` | 📋 Planned |
-| Java | `io.pintui:pintui` | 📋 Planned |
-| C++ | `pintui` | 📋 Planned |
-| Zig | `pintui` | 📋 Planned |
-| Swift | `pintui` | 📋 Planned |
-| C# | `Pintui` (NuGet) | 📋 Planned |
-| Ruby | `pintui` (RubyGems) | 📋 Planned |
-| Gleam | `pintui` (Hex) | 📋 Planned |
-| Nim | `pintui` (Nimble) | 📋 Planned |
-| Crystal | `pintui` (Shards) | 📋 Planned |
-| Odin | `pintui` | 📋 Planned |
-| Elixir | `pintui` (Hex) | 📋 Planned |
-| OCaml | `pintui` (opam) | 📋 Planned |
-| Haskell | `pintui` (Hackage) | 📋 Planned |
-| D | `pintui` (dub) | 📋 Planned |
+</div>
 
-All implementations follow the same [design tokens](./spec/tokens.toml), ensuring your tools have a consistent visual language regardless of implementation language.
+---
 
-## Design Tokens
+## What is this?
 
-The heart of pintui is [`spec/tokens.toml`](./spec/tokens.toml) — a machine-readable specification defining:
+A personal project to have consistent terminal output across my CLI tools, regardless of what language they're written in.
 
-- **Colors**: Semantic color mappings (success=green, error=red, etc.)
-- **Icons**: Unicode symbols (✓ ✗ ⚠ ℹ)
-- **Spinners**: Animation frames and timing
-- **Progress bars**: Characters and templates
-- **Layout**: Spacing, indentation, dividers
-- **Typography**: Text styling rules
+Same icons, same colors, same spacing — whether it's Rust, Go, or Python.
 
-## Quick Example
+## Usage
 
 ### Rust
+
+```toml
+[dependencies]
+pintui = "0.1"
+```
 
 ```rust
 use pintui::{messages, layout, progress};
 
 messages::info("Starting deployment...");
 
-let spinner = progress::spinner("Connecting to server");
-// ... do work ...
+let spinner = progress::spinner("Connecting");
+// ... work ...
 progress::finish_success(&spinner, "Connected");
 
 layout::header("Configuration");
 layout::kv("Environment", "production");
-layout::kv("Region", "us-east-1");
 
-messages::success("Deployment complete!");
+messages::success("Done!");
 ```
 
-### Go (planned)
+### Go
+
+```bash
+go get github.com/albertocavalcante/pintui/go
+```
 
 ```go
-import "github.com/albertocavalcante/pintui-go"
+import "github.com/albertocavalcante/pintui/go"
 
 pintui.Info("Starting deployment...")
 
-spinner := pintui.Spinner("Connecting to server")
-// ... do work ...
+spinner := pintui.Spinner("Connecting")
 spinner.Success("Connected")
 
 pintui.Header("Configuration")
 pintui.KV("Environment", "production")
-pintui.KV("Region", "us-east-1")
 
-pintui.Success("Deployment complete!")
+pintui.Success("Done!")
 ```
 
-### TypeScript (planned)
+### Python
 
-```typescript
-import { messages, layout, progress } from '@pintui/core';
-
-messages.info('Starting deployment...');
-
-const spinner = progress.spinner('Connecting to server');
-// ... do work ...
-spinner.success('Connected');
-
-layout.header('Configuration');
-layout.kv('Environment', 'production');
-layout.kv('Region', 'us-east-1');
-
-messages.success('Deployment complete!');
+```bash
+pip install pintui
 ```
 
-## Visual Language
+```python
+from pintui import messages, layout, progress
 
-Pintui provides opinionated defaults for a unified look:
+messages.info("Starting deployment...")
 
-```
-✓ Success messages (green)
-✗ Error messages (red)
-⚠ Warning messages (yellow)
-ℹ Info messages (blue)
+with progress.spinner("Connecting") as s:
+    s.success("Connected")
 
-⠋ Loading...  (animated spinner)
+layout.header("Configuration")
+layout.kv("Environment", "production")
 
-[━━━━━━━━━━━━━━━━━━━━╸───────────────────] 50/100
-
-Configuration
-─────────────
-  Environment: production
-  Region: us-east-1
+messages.success("Done!")
 ```
 
-## Philosophy
+## API
 
-1. **Opinionated defaults**: Look good out of the box
-2. **Consistent everywhere**: Same visual language across all your tools
-3. **Simple API**: Common operations should be one-liners
-4. **Spec-driven**: Design tokens are the source of truth
+| Module | Functions |
+|--------|-----------|
+| **messages** | `info` `success` `warn` `error` `dim` |
+| **layout** | `header` `section` `kv` `step` `divider` `indent` `blank` |
+| **progress** | `spinner` `bar` `StageProgress` |
+| **format** | `human_size` `human_duration` `pluralize` `truncate_path` `parse_size` |
 
-## Project Structure
+## Design Tokens
 
+Everything comes from [`spec/tokens.toml`](./spec/tokens.toml):
+
+```toml
+[colors]
+success = { ansi = "green", hex = "#22c55e" }
+error   = { ansi = "red",   hex = "#ef4444" }
+
+[icons]
+success = "✓"
+error   = "✗"
+warning = "⚠"
+info    = "ℹ"
+
+[spinner]
+frames = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"]
 ```
-pintui/
-├── spec/
-│   └── tokens.toml      # Design system specification
-├── rust/                # Rust implementation
-├── go/                  # Go (planned)
-├── typescript/          # TypeScript (planned)
-├── python/              # Python (planned)
-├── kotlin/              # Kotlin (planned)
-├── java/                # Java (planned)
-├── cpp/                 # C++ (planned)
-├── zig/                 # Zig (planned)
-├── swift/               # Swift (planned)
-├── csharp/              # C# / .NET (planned)
-├── ruby/                # Ruby (planned)
-├── gleam/               # Gleam (planned)
-├── nim/                 # Nim (planned)
-├── crystal/             # Crystal (planned)
-├── odin/                # Odin (planned)
-├── elixir/              # Elixir (planned)
-├── ocaml/               # OCaml (planned)
-├── haskell/             # Haskell (planned)
-├── dlang/               # D (planned)
-└── docs/                # Documentation
-```
+
+## Status
+
+| Language | Status |
+|----------|--------|
+| [Rust](./rust) | ✅ Ready |
+| [Go](./go) | ✅ Ready |
+| [Python](./python) | ✅ Ready |
+| TypeScript | 🔜 Next |
+
+<details>
+<summary>Other languages (stubs only)</summary>
+
+Java, Kotlin, Swift, C#, C++, Zig, Ruby, Elixir, Gleam, Crystal, Nim, Odin, OCaml, Haskell, D
+
+</details>
 
 ## Name
 
-**Pintui** comes from Portuguese *"pintar"* (to paint) + TUI.
-
-*Paint your terminal beautifully.* 🇧🇷
+**pintui** = Portuguese *"pintar"* (to paint) + TUI 🇧🇷
 
 ## License
 
