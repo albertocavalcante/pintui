@@ -23,6 +23,10 @@ Pintui is a **design system** for terminal UIs with implementations in multiple 
 | Go | `pintui-go` | 📋 Planned |
 | TypeScript | `@pintui/core` | 📋 Planned |
 | Python | `pintui` | 📋 Planned |
+| Kotlin | `io.pintui:pintui-kotlin` | 📋 Planned |
+| Java | `io.pintui:pintui` | 📋 Planned |
+| C++ | `pintui` | 📋 Planned |
+| Zig | `pintui` | 📋 Planned |
 
 All implementations follow the same [design tokens](./spec/tokens.toml), ensuring your tools have a consistent visual language regardless of implementation language.
 
@@ -130,6 +134,10 @@ pintui/
 ├── go/                  # Go implementation (planned)
 ├── typescript/          # TypeScript implementation (planned)
 ├── python/              # Python implementation (planned)
+├── kotlin/              # Kotlin implementation (planned)
+├── java/                # Java implementation (planned)
+├── cpp/                 # C++ implementation (planned)
+├── zig/                 # Zig implementation (planned)
 └── docs/                # Documentation
 ```
 
