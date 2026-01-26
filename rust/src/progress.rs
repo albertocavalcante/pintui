@@ -100,7 +100,9 @@ pub fn bar(len: u64, prefix: &str) -> ProgressBar {
     let pb = ProgressBar::new(len);
     pb.set_style(
         ProgressStyle::default_bar()
-            .template("{prefix:.bold.dim} {spinner:.green} [{bar:40.cyan/blue}] {pos}/{len} {wide_msg}")
+            .template(
+                "{prefix:.bold.dim} {spinner:.green} [{bar:40.cyan/blue}] {pos}/{len} {wide_msg}",
+            )
             .unwrap()
             .progress_chars("━━╸"),
     );
@@ -203,7 +205,8 @@ impl StageProgress {
     /// # Arguments
     ///
     /// * `total` - Total number of stages
-    pub fn new(total: usize) -> Self {
+    #[must_use]
+    pub const fn new(total: usize) -> Self {
         Self { current: 0, total }
     }
 
@@ -216,7 +219,10 @@ impl StageProgress {
         pb.set_style(
             ProgressStyle::default_spinner()
                 .tick_chars("⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏")
-                .template(&format!("{{spinner:.cyan}} [{}/{}] {{msg}}", self.current, self.total))
+                .template(&format!(
+                    "{{spinner:.cyan}} [{}/{}] {{msg}}",
+                    self.current, self.total
+                ))
                 .unwrap(),
         );
         pb.set_message(name.to_string());
@@ -239,17 +245,20 @@ impl StageProgress {
     }
 
     /// Get the current stage number (1-indexed).
-    pub fn current(&self) -> usize {
+    #[must_use]
+    pub const fn current(&self) -> usize {
         self.current
     }
 
     /// Get the total number of stages.
-    pub fn total(&self) -> usize {
+    #[must_use]
+    pub const fn total(&self) -> usize {
         self.total
     }
 
     /// Check if all stages are complete.
-    pub fn is_complete(&self) -> bool {
+    #[must_use]
+    pub const fn is_complete(&self) -> bool {
         self.current >= self.total
     }
 }

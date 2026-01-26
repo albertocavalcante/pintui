@@ -55,7 +55,7 @@ pub fn human_size(bytes: u64) -> String {
     } else if bytes >= KB {
         format!("{:.1} KB", bytes as f64 / KB as f64)
     } else {
-        format!("{} B", bytes)
+        format!("{bytes} B")
     }
 }
 
@@ -120,7 +120,7 @@ pub fn parse_size(size_str: &str) -> Result<u64, String> {
         .map_err(|_| format!("Invalid number in size: '{}'", num_str.trim()))?;
 
     if num < 0.0 {
-        return Err(format!("Size cannot be negative: {}", num));
+        return Err(format!("Size cannot be negative: {num}"));
     }
 
     Ok((num * multiplier as f64) as u64)
@@ -175,9 +175,9 @@ pub fn truncate_path(path: &str, max_len: usize) -> String {
 /// ```
 pub fn pluralize(count: usize, singular: &str, plural: &str) -> String {
     if count == 1 {
-        format!("{} {}", count, singular)
+        format!("{count} {singular}")
     } else {
-        format!("{} {}", count, plural)
+        format!("{count} {plural}")
     }
 }
 
@@ -199,17 +199,17 @@ pub fn human_duration(duration: std::time::Duration) -> String {
     let millis = duration.subsec_millis();
 
     if secs == 0 {
-        format!("{}ms", millis)
+        format!("{millis}ms")
     } else if secs < 60 {
-        format!("{}.{}s", secs, millis / 100)
+        format!("{secs}.{}s", millis / 100)
     } else if secs < 3600 {
         let mins = secs / 60;
         let remaining_secs = secs % 60;
-        format!("{}m {}s", mins, remaining_secs)
+        format!("{mins}m {remaining_secs}s")
     } else {
         let hours = secs / 3600;
         let remaining_mins = (secs % 3600) / 60;
-        format!("{}h {}m", hours, remaining_mins)
+        format!("{hours}h {remaining_mins}m")
     }
 }
 
@@ -245,7 +245,10 @@ mod tests {
     #[test]
     fn test_human_size_gb() {
         assert_eq!(human_size(1024 * 1024 * 1024), "1.0 GB");
-        assert_eq!(human_size(1024 * 1024 * 1024 * 2 + 1024 * 1024 * 512), "2.5 GB");
+        assert_eq!(
+            human_size(1024 * 1024 * 1024 * 2 + 1024 * 1024 * 512),
+            "2.5 GB"
+        );
     }
 
     #[test]

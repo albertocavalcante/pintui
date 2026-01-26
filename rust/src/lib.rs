@@ -65,4 +65,6 @@ pub mod progress;
 pub use format::{human_duration, human_size, parse_size, pluralize, truncate_path};
 pub use layout::{blank, divider, header, indent, kv, section, step};
 pub use messages::{dim, error, info, success, warn};
-pub use progress::{bar, finish_clear, finish_error, finish_success, finish_warn, spinner, StageProgress};
+pub use progress::{
+    StageProgress, bar, finish_clear, finish_error, finish_success, finish_warn, spinner,
+};

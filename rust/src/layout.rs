@@ -108,7 +108,7 @@ pub fn kv(key: &str, value: &str) {
 /// // [3/3] Linking
 /// ```
 pub fn step(num: usize, total: usize, msg: &str) {
-    println!("{} {}", format!("[{}/{}]", num, total).blue().bold(), msg);
+    println!("{} {}", format!("[{num}/{total}]").blue().bold(), msg);
 }
 
 /// Print a blank line for visual separation.
