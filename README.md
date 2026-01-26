@@ -27,6 +27,17 @@ Pintui is a **design system** for terminal UIs with implementations in multiple 
 | Java | `io.pintui:pintui` | 📋 Planned |
 | C++ | `pintui` | 📋 Planned |
 | Zig | `pintui` | 📋 Planned |
+| Swift | `pintui` | 📋 Planned |
+| C# | `Pintui` (NuGet) | 📋 Planned |
+| Ruby | `pintui` (RubyGems) | 📋 Planned |
+| Gleam | `pintui` (Hex) | 📋 Planned |
+| Nim | `pintui` (Nimble) | 📋 Planned |
+| Crystal | `pintui` (Shards) | 📋 Planned |
+| Odin | `pintui` | 📋 Planned |
+| Elixir | `pintui` (Hex) | 📋 Planned |
+| OCaml | `pintui` (opam) | 📋 Planned |
+| Haskell | `pintui` (Hackage) | 📋 Planned |
+| D | `pintui` (dub) | 📋 Planned |
 
 All implementations follow the same [design tokens](./spec/tokens.toml), ensuring your tools have a consistent visual language regardless of implementation language.
 
@@ -131,13 +142,24 @@ pintui/
 ├── spec/
 │   └── tokens.toml      # Design system specification
 ├── rust/                # Rust implementation
-├── go/                  # Go implementation (planned)
-├── typescript/          # TypeScript implementation (planned)
-├── python/              # Python implementation (planned)
-├── kotlin/              # Kotlin implementation (planned)
-├── java/                # Java implementation (planned)
-├── cpp/                 # C++ implementation (planned)
-├── zig/                 # Zig implementation (planned)
+├── go/                  # Go (planned)
+├── typescript/          # TypeScript (planned)
+├── python/              # Python (planned)
+├── kotlin/              # Kotlin (planned)
+├── java/                # Java (planned)
+├── cpp/                 # C++ (planned)
+├── zig/                 # Zig (planned)
+├── swift/               # Swift (planned)
+├── csharp/              # C# / .NET (planned)
+├── ruby/                # Ruby (planned)
+├── gleam/               # Gleam (planned)
+├── nim/                 # Nim (planned)
+├── crystal/             # Crystal (planned)
+├── odin/                # Odin (planned)
+├── elixir/              # Elixir (planned)
+├── ocaml/               # OCaml (planned)
+├── haskell/             # Haskell (planned)
+├── dlang/               # D (planned)
 └── docs/                # Documentation
 ```
 
