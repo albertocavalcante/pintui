@@ -15,6 +15,7 @@ categories = ["command-line-interface", "development-tools"]
 [dependencies]
 colored = "3"
 indicatif = "0.18"
+unicode-width = "0.2"
 
 [lints.rust]
 unsafe_code = "forbid"

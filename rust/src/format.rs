@@ -153,13 +153,27 @@ pub fn parse_size(size_str: &str) -> Result<u64, String> {
 /// assert_eq!(truncate_path("", 10), "");
 /// ```
 pub fn truncate_path(path: &str, max_len: usize) -> String {
+    // Fast path: if byte length fits, char count certainly fits too
+    // (every char is at least 1 byte).
     if path.len() <= max_len {
-        path.to_string()
-    } else if max_len <= 3 {
-        "...".to_string()
-    } else {
-        format!("...{}", &path[path.len() - max_len + 3..])
+        return path.to_string();
     }
+
+    let char_count = path.chars().count();
+    if char_count <= max_len {
+        return path.to_string();
+    }
+
+    if max_len <= 3 {
+        return "...".to_string();
+    }
+
+    let skip = char_count - (max_len - 3);
+    let byte_offset = path
+        .char_indices()
+        .nth(skip)
+        .map_or(path.len(), |(i, _)| i);
+    format!("...{}", &path[byte_offset..])
 }
 
 /// Format a count with singular/plural form.
@@ -330,6 +344,24 @@ mod tests {
         assert_eq!(truncate_path("test", 3), "...");
         assert_eq!(truncate_path("test", 2), "...");
         assert_eq!(truncate_path("", 10), "");
+    }
+
+    #[test]
+    fn test_truncate_path_multibyte() {
+        // "test日" is 7 bytes but 5 chars — fits in max_len=5.
+        assert_eq!(truncate_path("test日", 5), "test日");
+
+        // "test日本語" is 13 bytes, 7 chars. max_len=5 → keep 2 chars from end.
+        assert_eq!(truncate_path("test日本語", 5), "...本語");
+
+        // Multi-byte at the truncation boundary.
+        assert_eq!(truncate_path("日本語test", 6), "...est");
+
+        // All multi-byte, 5 chars fits in max_len=5.
+        assert_eq!(truncate_path("日本語漢字", 5), "日本語漢字");
+
+        // All multi-byte, 5 chars exceeds max_len=4.
+        assert_eq!(truncate_path("日本語漢字", 4), "...字");
     }
 
     // =========================================================================

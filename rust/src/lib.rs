@@ -56,10 +56,13 @@
 //!
 //! See: <https://github.com/albertocavalcante/pintui>
 
+pub mod checklist;
 pub mod format;
+pub mod icons;
 pub mod layout;
 pub mod messages;
 pub mod progress;
+pub mod table;
 
 // Re-export commonly used items at crate root for convenience
 pub use format::{human_duration, human_size, parse_size, pluralize, truncate_path};
@@ -68,3 +71,4 @@ pub use messages::{dim, error, info, success, warn};
 pub use progress::{
     StageProgress, bar, finish_clear, finish_error, finish_success, finish_warn, spinner,
 };
+pub use table::{KvGroup, Table};

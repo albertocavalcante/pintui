@@ -34,11 +34,14 @@
 //! ```
 
 use colored::Colorize;
+use unicode_width::UnicodeWidthStr;
 
 /// Print a header/title with an underline.
 ///
-/// Headers are bold and followed by a dimmed line of the same width.
+/// Headers are bold and followed by a dimmed line of the same display width.
 /// A blank line is printed before the header for visual separation.
+/// Uses Unicode display width for correct measurement of CJK and other
+/// wide characters.
 ///
 /// # Example
 ///
@@ -52,7 +55,15 @@ use colored::Colorize;
 pub fn header(title: &str) {
     println!();
     println!("{}", title.bold());
-    println!("{}", "─".repeat(title.len()).dimmed());
+    println!("{}", "─".repeat(header_underline_width(title)).dimmed());
+}
+
+/// Compute the display width of a header's underline.
+///
+/// Uses Unicode display width so CJK and other wide characters are
+/// measured correctly (e.g., "日本語" → 6, not 9 bytes).
+fn header_underline_width(title: &str) -> usize {
+    UnicodeWidthStr::width(title)
 }
 
 /// Print a section header.
@@ -211,5 +222,34 @@ mod tests {
         header("日本語ヘッダー");
         section("セクション");
         kv("キー", "値");
+    }
+
+    // =====================================================================
+    // header_underline_width — B3 regression tests
+    // =====================================================================
+
+    #[test]
+    fn header_underline_width_ascii() {
+        assert_eq!(header_underline_width("Hello"), 5);
+        assert_eq!(header_underline_width("Configuration"), 13);
+    }
+
+    #[test]
+    fn header_underline_width_cjk() {
+        // Each CJK character is 2 display columns.
+        // "日本語" = 3 chars * 2 columns = 6 (NOT 9 bytes).
+        assert_eq!(header_underline_width("日本語"), 6);
+        assert_eq!(header_underline_width("日本語ヘッダー"), 14);
+    }
+
+    #[test]
+    fn header_underline_width_mixed() {
+        // "Hello世界" = 5 ASCII + 2 CJK * 2 = 9 display columns
+        assert_eq!(header_underline_width("Hello世界"), 9);
+    }
+
+    #[test]
+    fn header_underline_width_empty() {
+        assert_eq!(header_underline_width(""), 0);
     }
 }

@@ -26,6 +26,8 @@
 
 use colored::Colorize;
 
+use crate::icons;
+
 /// Print an info message with a blue ℹ icon.
 ///
 /// Use for general information that doesn't indicate success or failure.
@@ -37,7 +39,7 @@ use colored::Colorize;
 /// // Output: ℹ Processing 42 files...
 /// ```
 pub fn info(msg: &str) {
-    println!("{} {}", "ℹ".blue(), msg);
+    println!("{} {msg}", icons::info());
 }
 
 /// Print a success message with a green ✓ icon.
@@ -51,7 +53,7 @@ pub fn info(msg: &str) {
 /// // Output: ✓ All tests passed
 /// ```
 pub fn success(msg: &str) {
-    println!("{} {}", "✓".green(), msg);
+    println!("{} {msg}", icons::ok());
 }
 
 /// Print a warning message with a yellow ⚠ icon.
@@ -65,7 +67,7 @@ pub fn success(msg: &str) {
 /// // Output: ⚠ Config file not found, using defaults
 /// ```
 pub fn warn(msg: &str) {
-    println!("{} {}", "⚠".yellow(), msg);
+    println!("{} {msg}", icons::warn());
 }
 
 /// Print an error message with a red ✗ icon.
@@ -79,13 +81,14 @@ pub fn warn(msg: &str) {
 /// // Output (stderr): ✗ Failed to connect to database
 /// ```
 pub fn error(msg: &str) {
-    eprintln!("{} {}", "✗".red(), msg);
+    eprintln!("{} {msg}", icons::fail());
 }
 
 /// Print a dim/muted message.
 ///
 /// Use for secondary information, details, or context that shouldn't
-/// draw attention away from primary content.
+/// draw attention away from primary content. Callers control their own
+/// indentation by including leading spaces in `msg`.
 ///
 /// # Example
 ///
@@ -95,7 +98,7 @@ pub fn error(msg: &str) {
 /// pintui::messages::dim("  Size: 4.2 MB");
 /// ```
 pub fn dim(msg: &str) {
-    println!("  {}", msg.dimmed());
+    println!("{}", msg.dimmed());
 }
 
 #[cfg(test)]

@@ -48,9 +48,10 @@
 //! pintui::progress::finish_success(&s2, "Built");
 //! ```
 
-use colored::Colorize;
 use indicatif::{ProgressBar, ProgressStyle};
 use std::time::Duration;
+
+use crate::icons;
 
 /// Create a spinner for indeterminate progress.
 ///
@@ -125,7 +126,7 @@ pub fn bar(len: u64, prefix: &str) -> ProgressBar {
 /// ```
 pub fn finish_success(pb: &ProgressBar, msg: &str) {
     pb.set_style(ProgressStyle::default_spinner().template("{msg}").unwrap());
-    pb.finish_with_message(format!("{} {}", "✓".green(), msg));
+    pb.finish_with_message(format!("{} {msg}", icons::ok()));
 }
 
 /// Finish a progress indicator with an error message.
@@ -142,7 +143,7 @@ pub fn finish_success(pb: &ProgressBar, msg: &str) {
 /// ```
 pub fn finish_error(pb: &ProgressBar, msg: &str) {
     pb.set_style(ProgressStyle::default_spinner().template("{msg}").unwrap());
-    pb.finish_with_message(format!("{} {}", "✗".red(), msg));
+    pb.finish_with_message(format!("{} {msg}", icons::fail()));
 }
 
 /// Finish a progress indicator with a warning message.
@@ -159,7 +160,7 @@ pub fn finish_error(pb: &ProgressBar, msg: &str) {
 /// ```
 pub fn finish_warn(pb: &ProgressBar, msg: &str) {
     pb.set_style(ProgressStyle::default_spinner().template("{msg}").unwrap());
-    pb.finish_with_message(format!("{} {}", "⚠".yellow(), msg));
+    pb.finish_with_message(format!("{} {msg}", icons::warn()));
 }
 
 /// Finish a progress indicator and clear it from display.
@@ -236,11 +237,10 @@ impl StageProgress {
     pub fn skip(&mut self, name: &str) {
         self.current += 1;
         println!(
-            "  {} [{}/{}] {} (skipped)",
-            "○".dimmed(),
+            "  {} [{}/{}] {name} (skipped)",
+            icons::skip(),
             self.current,
             self.total,
-            name
         );
     }
 
