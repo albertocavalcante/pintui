@@ -195,6 +195,39 @@ pub fn pluralize(count: usize, singular: &str, plural: &str) -> String {
     }
 }
 
+/// Format a number with comma separators for readability.
+///
+/// Inserts commas every three digits from the right for numbers
+/// 1,000 and above. Numbers below 1,000 are returned unchanged.
+///
+/// # Examples
+///
+/// ```
+/// use pintui::format::human_count;
+///
+/// assert_eq!(human_count(0), "0");
+/// assert_eq!(human_count(42), "42");
+/// assert_eq!(human_count(999), "999");
+/// assert_eq!(human_count(1_000), "1,000");
+/// assert_eq!(human_count(1_234_567), "1,234,567");
+/// assert_eq!(human_count(1_000_000_000), "1,000,000,000");
+/// ```
+pub fn human_count(n: u64) -> String {
+    let s = n.to_string();
+    if s.len() <= 3 {
+        return s;
+    }
+
+    let mut result = String::with_capacity(s.len() + s.len() / 3);
+    for (i, ch) in s.chars().enumerate() {
+        if i > 0 && (s.len() - i) % 3 == 0 {
+            result.push(',');
+        }
+        result.push(ch);
+    }
+    result
+}
+
 /// Format a duration in a human-readable way.
 ///
 /// # Examples
@@ -406,5 +439,36 @@ mod tests {
         assert_eq!(human_duration(Duration::from_secs(3600)), "1h 0m");
         assert_eq!(human_duration(Duration::from_secs(3661)), "1h 1m");
         assert_eq!(human_duration(Duration::from_secs(7200)), "2h 0m");
+    }
+
+    // =========================================================================
+    // human_count tests
+    // =========================================================================
+
+    #[test]
+    fn test_human_count_small() {
+        assert_eq!(human_count(0), "0");
+        assert_eq!(human_count(1), "1");
+        assert_eq!(human_count(42), "42");
+        assert_eq!(human_count(999), "999");
+    }
+
+    #[test]
+    fn test_human_count_thousands() {
+        assert_eq!(human_count(1_000), "1,000");
+        assert_eq!(human_count(1_234), "1,234");
+        assert_eq!(human_count(10_000), "10,000");
+        assert_eq!(human_count(999_999), "999,999");
+    }
+
+    #[test]
+    fn test_human_count_millions() {
+        assert_eq!(human_count(1_000_000), "1,000,000");
+        assert_eq!(human_count(1_234_567), "1,234,567");
+    }
+
+    #[test]
+    fn test_human_count_billions() {
+        assert_eq!(human_count(1_000_000_000), "1,000,000,000");
     }
 }
