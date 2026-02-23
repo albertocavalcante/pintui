@@ -14,7 +14,7 @@ categories = ["command-line-interface", "development-tools"]
 
 [dependencies]
 colored = "3"
-dialoguer = "0.11"
+dialoguer = "0.12"
 indicatif = "0.18"
 terminal_size = "0.4"
 unicode-width = "0.2"
